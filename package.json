@@ -1,0 +1,51 @@
+{
+    "name": "freshforces-demo",
+    "version": "1.0.0",
+    "description": "Demo fresh-forces structure",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "jquery": "3.4.1",
+        "jquery-ui": "1.12.1"
+    },
+    "devDependencies": {
+        "core-js": "2",
+        "@babel/core": "^7.8.3",
+        "@babel/polyfill": "7.8.3",
+        "@babel/preset-env": "7.8.3",
+        "@babel/preset-es2015": "^7.0.0-beta.53",
+        "babel-loader": "^8.0.6",
+        "babelify": "^10.0.0",
+        "browser-sync": "latest",
+        "browserify": "^16.5.0",
+        "dotenv": "8.2.0",
+        "event-stream": "^4.0.1",
+        "gulp": "^4.0.0",
+        "gulp-autoprefixer": "latest",
+        "gulp-babel": "^7.0.1",
+        "gulp-bower": "latest",
+        "gulp-concat": "^2.6.1",
+        "gulp-if": "^3.0.0",
+        "gulp-imagemin": "latest",
+        "gulp-include": "latest",
+        "gulp-jshint": "^2.1.0",
+        "gulp-livereload": "latest",
+        "gulp-notify": "^3.2.0",
+        "gulp-plumber": "^1.2.0",
+        "gulp-rename": "latest",
+        "gulp-sass": "^4.0.2",
+        "gulp-sourcemaps": "latest",
+        "gulp-uglify": "^3.0.1",
+        "gulp-uglify-es": "^1.0.4",
+        "gulp-watch": "latest",
+        "merge-stream": "^2.0.0",
+        "sass": "^1.15.1",
+        "vinyl-buffer": "^1.0.1",
+        "vinyl-source-stream": "^2.0.0",
+        "watchify": "^3.11.1"
+    }
+}
