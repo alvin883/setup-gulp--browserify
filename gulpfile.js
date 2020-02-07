@@ -73,7 +73,7 @@ function runJsBundler(bundler, source) {
  * SASS Compiler, without watcher
  */
 gulp.task("compile-sass", function() {
-    const { sourcemap, minify } = gulpOptions.sass;
+    const { sourcemap, minify, src, distFolder } = gulpOptions.sass;
     const _sassOptions = {
         ...sassOptions,
         outputStyle: minify ? "compressed" : "nested"
@@ -84,15 +84,18 @@ gulp.task("compile-sass", function() {
         onLast: true
     });
 
+    // Validate `src` options
+    if (!src || !Array.isArray(src) || !src.length) return false;
+
     return gulp
-        .src(gulpOptions.sass.src)
+        .src(src)
         .pipe(gulpIf(minify, gulpRename({ suffix: ".min" })))
         .pipe(gulpSourcemaps.init())
         .pipe(gulpPlumber())
         .pipe(gulpSass(_sassOptions))
         .pipe(gulpAutoprefixer())
         .pipe(gulpIf(sourcemap, gulpSourcemaps.write(".")))
-        .pipe(gulp.dest(gulpOptions.sass.distFolder))
+        .pipe(gulp.dest(distFolder))
         .pipe(onSuccess);
 });
 
@@ -101,7 +104,12 @@ gulp.task("compile-sass", function() {
  * it will run compiler first and then watch for file changes
  */
 gulp.task("watch-sass", function() {
-    gulp.watch(gulpOptions.sass.watch, gulp.series("compile-sass"));
+    const { watch } = gulpOptions.sass;
+
+    // Validate `watch` options
+    if (!watch || !Array.isArray(watch) || !watch.length) return false;
+
+    gulp.watch(watch, gulp.series("compile-sass"));
 });
 
 /**
@@ -110,6 +118,9 @@ gulp.task("watch-sass", function() {
  */
 gulp.task("watch-js", function() {
     const { sourcemap, src } = gulpOptions.javascript;
+
+    // Validate `src` options
+    if (!src || !Array.isArray(src) || !src.length) return false;
 
     const stream = src.map(function(_file) {
         const file = typeof _file === "string" ? _file : _file.src;
@@ -133,6 +144,9 @@ gulp.task("watch-js", function() {
 gulp.task("compile-js", function() {
     const { sourcemap, src } = gulpOptions.javascript;
 
+    // Validate `src` options
+    if (!src || !Array.isArray(src) || !src.length) return false;
+
     const stream = src.map(function(_file) {
         const file = typeof _file === "string" ? _file : _file.src;
         const bundler = browserify(file, { debug: sourcemap }).transform(
@@ -151,11 +165,11 @@ gulp.task("compile-js", function() {
  * Reload browser on file changes
  */
 gulp.task("browser-sync", function() {
-    browserSync.init(
-        gulpOptions.browserSync.watchFiles,
-        gulpOptions.browserSync.config
-    );
-    gulp.watch(gulpOptions.browserSync.watchFiles).on("change", function() {
+    const { config, watchFiles } = gulpOptions.browserSync;
+    const _watchFiles = watchFiles || [];
+
+    browserSync.init(_watchFiles, config);
+    gulp.watch(_watchFiles).on("change", function() {
         browserSync.reload();
     });
 });
